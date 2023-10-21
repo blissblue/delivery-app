@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import ReactDOM from "react-dom";
 import "./App.css";
 import menuItems from "./data";
 import Menu from "./components/Menu";
@@ -44,28 +43,7 @@ function App() {
     (total, item) => total + item.price * item.quantity,
     0
   );
-  const Backdrop = () => {
-    return <div className="backdrop" />;
-  };
-  const ModalOverlay = () => {
-    return (
-      <div className="modal">
-        <Cart
-          cart={cart}
-          setCart={setCart}
-          cartTotal={cartTotal}
-          removeFromCart={removeFromCart}
-          addFromCart={addFromCart}
-        />
-        <div className="btn-area">
-          <button className="btn-payment">결제</button>
-          <button className="btn-close" onClick={() => setIsCartOpen(false)}>
-            취소
-          </button>
-        </div>
-      </div>
-    );
-  };
+
   return (
     <div className="container">
       <header>
@@ -82,14 +60,25 @@ function App() {
 
       {isCartOpen && (
         <>
-          {ReactDOM.createPortal(
-            <Backdrop />,
-            document.getElementById("backdrop-root")
-          )}
-          {ReactDOM.createPortal(
-            <ModalOverlay />,
-            document.getElementById("overlay-root")
-          )}
+          <div className="modal">
+            <Cart
+              cart={cart}
+              setCart={setCart}
+              cartTotal={cartTotal}
+              removeFromCart={removeFromCart}
+              addFromCart={addFromCart}
+            />
+            <div className="btn-area">
+              <button className="btn-payment">결제</button>
+              <button
+                className="btn-close"
+                onClick={() => setIsCartOpen(false)}
+              >
+                취소
+              </button>
+            </div>
+          </div>
+          <div className="backdrop" />
         </>
       )}
     </div>
